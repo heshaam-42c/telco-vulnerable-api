@@ -31,6 +31,8 @@ services:
       PORT: "3000"
       MONGO_URI: mongodb://mongo:27017/telco-api
       JWT_SECRET: fmXvHeBcCeZohjwu2qJ6kEhvISu+cz4iIZeRGJ3tOj4=
+    volumes:
+      - ./shared/certs:/app/shared/certs:ro
     depends_on:
       mongo:
         condition: service_healthy
@@ -50,6 +52,8 @@ services:
       PORT: "4000"
       MONGO_URI: mongodb://mongo:27017/telco-api
       JWT_SECRET: your-secret-key-here
+    volumes:
+      - ./shared/certs:/app/shared/certs:ro
     command: ["node", "server.js"]
     depends_on:
       mongo:
@@ -67,6 +71,8 @@ services:
       SECURED_PORT: "4001"
       MONGO_URI: mongodb://mongo:27017/telco-api
       JWT_SECRET: your-secret-key-here
+    volumes:
+      - ./shared/certs:/app/shared/certs:ro
     command: ["node", "server-secured.js"]
     depends_on:
       - graphql-api                   # ensures image is built before this starts

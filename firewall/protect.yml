@@ -1,4 +1,3 @@
-version: '1.0'
 services:
   telco-secured.42crunch.test:
     image: 42crunch/apifirewall:latest
@@ -9,7 +8,7 @@ services:
       - ./api-firewall/ssl:/opt/guardian/conf/ssl
       - ./api-firewall/LetsEncryptCert:/certs
     command:
-      ["/bin/squire", "-platform", "protection.demolabs.42crunch.cloud:8001", "-debug"]
+      ["/bin/squire", "-platform", "protection.trials.42crunch.com:8001", "-debug"]
     environment:
       - SERVER_NAME=localhost
       - LISTEN_PORT=443
@@ -19,7 +18,7 @@ services:
       - LISTEN_SSL_CERT=firewall-cert.pem
       - LISTEN_SSL_KEY=firewall-key.pem
       - LOG_LEVEL=DEBUG
-      - TARGET_URL=https://host.docker.internal:3000
+      - TARGET_URL=https://host.docker.internal:3000/
       - PRESERVE_HOST=ON
     env_file: ".env"
     networks:
