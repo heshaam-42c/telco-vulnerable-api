@@ -7,6 +7,8 @@ cd "$REPO_ROOT"
 COMPOSE_FILE="docker-compose.yml"
 FW_COMPOSE_FILE="firewall/protect.yml"
 NGROK_DOMAIN="cute-noble-boar.ngrok-free.app"
+COMPOSE_PROJECT="${COMPOSE_PROJECT_NAME:-$(basename "$REPO_ROOT")}"
+MONGO_VOLUME="${COMPOSE_PROJECT}_mongo_data"
 
 # Container names
 CONTAINER_REST="telco-rest-api"
@@ -74,7 +76,16 @@ cmd_stop() {
   local target="$1"
   echo "==> Stopping ${target}..."
   case "$target" in
-    rest)    docker compose -f "$COMPOSE_FILE" stop "$SERVICE_REST" ;;
+    rest)
+      docker compose -f "$COMPOSE_FILE" stop "$SERVICE_REST" "$SERVICE_MONGO"
+      docker compose -f "$COMPOSE_FILE" rm -f -v "$SERVICE_REST" "$SERVICE_MONGO"
+      if docker volume inspect "$MONGO_VOLUME" >/dev/null 2>&1; then
+        docker volume rm -f "$MONGO_VOLUME" >/dev/null
+        echo "  Removed Mongo volume: ${MONGO_VOLUME}"
+      else
+        echo "  Mongo volume not found: ${MONGO_VOLUME}"
+      fi
+      ;;
     graphql) docker compose -f "$COMPOSE_FILE" stop "$SERVICE_GQL" "$SERVICE_GQL_SECURED" ;;
     all)     docker compose -f "$COMPOSE_FILE" stop ;;
   esac
@@ -86,7 +97,7 @@ cmd_reset() {
   case "$target" in
     rest)
       remove_container "$CONTAINER_REST"
-      docker compose -f "$COMPOSE_FILE" up -d "$SERVICE_REST"
+      docker compose -f "$COMPOSE_FILE" up -d "$SERVICE_REST" --build
       ;;
     graphql)
       remove_container "$CONTAINER_GQL"
