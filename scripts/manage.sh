@@ -102,13 +102,13 @@ cmd_reset() {
     graphql)
       remove_container "$CONTAINER_GQL"
       remove_container "$CONTAINER_GQL_SECURED"
-      docker compose -f "$COMPOSE_FILE" up -d "$SERVICE_GQL" "$SERVICE_GQL_SECURED"
+      docker compose -f "$COMPOSE_FILE" up -d "$SERVICE_GQL" "$SERVICE_GQL_SECURED" --build
       ;;
     all)
       remove_container "$CONTAINER_REST"
       remove_container "$CONTAINER_GQL"
       remove_container "$CONTAINER_GQL_SECURED"
-      docker compose -f "$COMPOSE_FILE" up -d "$SERVICE_REST" "$SERVICE_GQL" "$SERVICE_GQL_SECURED"
+      docker compose -f "$COMPOSE_FILE" up -d "$SERVICE_REST" "$SERVICE_GQL" "$SERVICE_GQL_SECURED" --build
       ;;
   esac
 }
