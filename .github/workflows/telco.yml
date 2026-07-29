@@ -60,7 +60,7 @@ jobs:
           log-level: DEBUG
           ignore-failures: false
           json-report: audit-action-report-${{ github.run_id }}.json
-          api-tags: "ApiType:Telecom"
+          default-collection-name: GitHubActions heshaam-42c/telco-vulnerable-api--${{ github.ref_name }}
 
       - name: Check Audit Summary Report
         id: Check_Audit
