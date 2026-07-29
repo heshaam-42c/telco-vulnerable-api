@@ -1,3 +1,5 @@
 apis:
   rest-api/openapi/telco-openapi.json:
     alias: telco-vulnerable-api
+  rest-api/openapi/telco-openapi-remediated.json:
+    alias: telco-vulnerable-api-remediated
