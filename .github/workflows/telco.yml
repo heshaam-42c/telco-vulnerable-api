@@ -80,7 +80,7 @@ jobs:
         id: Fetch_API_AliasId
         run: |
           cat ${{ github.workspace }}/.42c/conf.yaml
-          aliasId=$(yq '.apis.["rest-api/openapi/telco-openapi-remediated.json"].alias' \
+          aliasId=$(yq '.apis.["rest-api/openapi/telco-openapi.json"].alias' \
             < ${{ github.workspace }}/.42c/conf.yaml)
           echo "Telco API AliasId: $aliasId"
           echo "API_ALIAS_ID=$aliasId" >> $GITHUB_OUTPUT
