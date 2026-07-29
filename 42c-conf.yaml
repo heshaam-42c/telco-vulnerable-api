@@ -8,3 +8,5 @@ audit:
           search:
             # - '**/*.*'
             - 'telco-openapi.json'
+            - 'telco-openapi-protection.json'
+            - 'telco-openapi-remediated.json'
