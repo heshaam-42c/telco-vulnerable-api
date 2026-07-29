@@ -6,4 +6,5 @@ audit:
           dir: rest-api/openapi
           collection_name: "Telco API - Demo"
           search:
-            - '**/*.*'
+            # - '**/*.*'
+            - 'telco-openapi.json'
